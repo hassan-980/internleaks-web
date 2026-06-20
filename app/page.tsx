@@ -137,16 +137,29 @@ export default function Page() {
       let aiResult;
       let rawResponseData;
 
-     // 🤖 ASLI AI API CALLS (Gemini Engine)
+      // 🤖 FULL-CONTEXT AI API CALL (Image + Form Details)
       if (selectedFile) {
         const formData = new FormData()
         formData.append("file", selectedFile)
         
-        // 👉 NAYI LINE: Form se typed company name bhi backend ko bhejo
+        // 👉 Saari user-provided details ab backend ko jaayengi
         formData.append("companyName", wizard.companyName || "Unknown")
+        formData.append("companyWebsite", wizard.companyWebsite || "")
+        formData.append("paymentDemanded", wizard.paymentDemanded || "Not Sure")
+        formData.append("interviewTaken", wizard.interviewTaken || "Not Sure")
+        formData.append("hrEmailDomain", wizard.hrEmailDomain || "")
+        formData.append("userSuspicionFeedback", wizard.userSuspicionFeedback || "")
         
         const response = await axios.post("http://localhost:8080/api/v1/analyze-image", formData, {
           headers: { "Content-Type": "multipart/form-data" }
+        })
+        rawResponseData = response.data;
+      } else {
+        // Text scanner ka flow (Agar document upload nahi kiya)
+        const jobContext = `Website: ${wizard.companyWebsite}. Payment: ${wizard.paymentDemanded}. Interview: ${wizard.interviewTaken}. HR Email: ${wizard.hrEmailDomain}. User Suspicion: ${wizard.userSuspicionFeedback}`
+        const response = await axios.post("http://localhost:8080/api/v1/analyze", {
+          companyName: wizard.companyName || "Unknown",
+          jobDetails: jobContext
         })
         rawResponseData = response.data;
       }
@@ -163,13 +176,12 @@ export default function Page() {
           cleanString = cleanString.substring(startIdx, endIdx + 1);
         }
 
-        // 3. Fallback/Safe Parsing (Agar JSON break hota hai toh Default values set karo)
+        // 3. Fallback/Safe Parsing
         try {
           aiResult = JSON.parse(cleanString);
         } catch (parseError) {
           console.error("AI returned malformed JSON. Using fallback data. Raw string:", cleanString);
           
-          // Agar Gemini ka format bigad jaye toh UI crash hone se bachane ke liye fallback data
           aiResult = {
             riskPercentage: cleanString.toLowerCase().includes("high") ? 85 : 45,
             verdict: "AI completed the analysis, but formatting failed. Check red flags.",
@@ -177,7 +189,6 @@ export default function Page() {
             isValidDocument: true
           };
           
-          // Chhota sa regex hack (Agar ho sake toh risk nikal lo)
           const riskMatch = cleanString.match(/"riskPercentage"\s*:\s*(\d+)/);
           if (riskMatch && riskMatch[1]) {
             aiResult.riskPercentage = parseInt(riskMatch[1]);
@@ -246,7 +257,6 @@ export default function Page() {
       const backendPayload = {
         userEmail: userEmail,
         companyName: report.companyName || "Unknown Company",
-        // 🔥 NAYA FIX: Saari details as it is backend ko bhej rahe hain
         companyWebsite: report.companyWebsite || "Not Provided",
         hrEmailDomain: report.hrEmailDomain || "Not Provided",
         paymentDemanded: report.paymentDemanded || "Not Sure",
@@ -255,7 +265,7 @@ export default function Page() {
         description: finalDescription, 
         riskPercentage: report.riskPercentage,
         verdict: report.verdict,
-        redFlags: report.redFlags.join(" | ") // Array ko string banakar bhej rahe hain
+        redFlags: report.redFlags.join(" | ") 
       }
 
       const response = await axios.post("http://localhost:8080/api/v1/reports/add", backendPayload)
