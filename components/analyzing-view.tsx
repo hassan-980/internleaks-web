@@ -19,11 +19,7 @@ export function AnalyzingView({ onComplete }: AnalyzingViewProps) {
   const [step, setStep] = useState(0)
   const [visible, setVisible] = useState(true)
 
-  // transition to the result view after the heavy "processing" window
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 5000)
-    return () => clearTimeout(timer)
-  }, [onComplete])
+
 
   // cycle status messages with a fade-out / fade-in between each
   useEffect(() => {

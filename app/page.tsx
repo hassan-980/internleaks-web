@@ -218,6 +218,9 @@ export default function Page() {
 
       setCurrentReport(finalReport)
 
+      // Data loaded — immediately show the result view
+      setView("result")
+
       if (isLoggedIn && userEmail) {
         try {
           const token = localStorage.getItem("internleaks_token"); 
