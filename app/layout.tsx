@@ -13,10 +13,65 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'INTERNLEAKS — AI Fake Internship Offer Detector',
+  title: {
+    default: 'InternLeaks | AI-Powered Fake Internship & Scam Checker',
+    template: '%s | InternLeaks',
+  },
   description:
-    'Verify your internship offer before you get scammed. AI-powered detection of fake internship offers. 100% anonymous and encrypted.',
-  generator: 'v0.app',
+    'Upload your offer letter and use our advanced AI to detect fake internships, HR frauds, and advance-fee scams. 100% free and anonymous for students.',
+  keywords: [
+    // 🔍 Scanner Keywords
+    'fake internship checker',
+    'offer letter scam',
+    'HR fraud detection',
+    'student job scams',
+    'AI offer letter analyzer',
+    'verify offer letter',
+    // 🧱 Scam Wall Keywords
+    'community reported scams',
+    'fake HR companies list',
+    'internship fraud database',
+    'scam wall',
+    // 🏢 Brand
+    'InternLeaks',
+  ],
+  authors: [{ name: 'Abhishek Kumar Sharma' }],
+  creator: 'Abhishek Kumar Sharma',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://internleaks.in',
+    title: 'InternLeaks | Expose Fake Internships with AI',
+    description:
+      "Verify your offer letter instantly using AI. Don't fall for HR scams and fake job offers.",
+    siteName: 'InternLeaks',
+    images: [
+      {
+        url: 'https://internleaks.in/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'InternLeaks Banner',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'InternLeaks | Expose Fake Internships with AI',
+    description:
+      'Verify your offer letter instantly using AI. Protect yourself from job scams.',
+    images: ['https://internleaks.in/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export const viewport: Viewport = {

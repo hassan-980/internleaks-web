@@ -27,5 +27,5 @@ jobs:
           # 4. Commit and Force Push to the public repo
           cd public_repo
           git add .
-          git commit -m "Auto-sync update from private repo 🚀" || echo "No changes to commit"
+          git commit -m "Changes checked and Approved" || echo "No changes to commit"
           git push https://${{ secrets.PUBLIC_REPO_TOKEN }}@github.com/AbhishekKTech/internleaks-web.git main

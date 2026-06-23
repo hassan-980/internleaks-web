@@ -97,7 +97,7 @@ export function DashboardView({ userEmail, userName, credits, onNavigateBack, on
       <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
           <h1 className="text-3xl font-bold text-white">
-            Welcome back, <span className="text-[#8b5cf6]">{displayName}</span>! 👋
+            Welcome back, <span className="text-[#8b5cf6]">{displayName}</span>!
           </h1>
           <p className="mt-2 text-white/60">Manage your submitted scam reports and credits.</p>
         </div>
