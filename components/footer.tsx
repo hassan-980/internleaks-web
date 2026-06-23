@@ -110,7 +110,7 @@ export function Footer() {
             className="group flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-400 transition-all hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-emerald-500/20"
           >
             <GithubIcon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110" />
-            Contribute & Fix Bugs
+            Star on GitHub ⭐
           </a>
           
         </div>
